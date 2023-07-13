@@ -24,11 +24,17 @@ function slide(element, original) {
     var parentWidth = element.parentElement.clientWidth
     var percent = Math.round(100 * width / parentWidth)
 
+    element.style.transition = "1s"
+
     if (newOther === "left") {
         element.style.left = "12.5%"
     } else {
         element.style.left = String(100 - percent - 12.5)+"%"
     }
+
+    setTimeout(() => {
+        element.style.transition = "0s"
+    }, 1100);
 
     statuses[element.id] = newOther
 }
@@ -37,11 +43,14 @@ function changeText(header, categoryName) {
     var pgs = header.children
 
     pgs[0].style.opacity = 0;
+    pgs[0].style.transition = "0.5s"
     setTimeout(function(){
         pgs[0].innerHTML = (header.id == "header1") ? categoryName : textWall[categoryName];
         pgs[0].style.opacity = 1;
     }, 525)
-    
+    setTimeout(function(){
+        pgs[0].style.transition = "0s"
+    }, 1027)
 }
 
 window.onload = function() {

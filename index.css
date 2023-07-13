@@ -66,7 +66,7 @@ html, body{
     width: 35%;
     height: 20%;
 
-    transition: 1s;
+    transition: 0s; /* to be changed in script */
     border-radius: 3px;
     
     position: relative;
@@ -82,7 +82,7 @@ html, body{
 
     width: 50%;
 
-    transition: 1s;
+    transition: 0s; /* to be changed in script */
     border-radius: 3px;
     
     position: relative;
@@ -91,11 +91,11 @@ html, body{
 }
 
 .paragraph1 {
-    transition: 0.5s;
+    transition: 0s; /* to be changed in script */
     opacity: 1;
 }
 
 .paragraph2 {
-    transition: 0.5s;
+    transition: 0s; /* to be changed in script */
     opacity: 0;
 }
