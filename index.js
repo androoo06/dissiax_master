@@ -10,6 +10,13 @@ var textWall = {
     "Contact Us":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, quidem vel. Exercitationem ipsa eligendi, aspernatur aut nemo debitis? Nobis illo voluptatibus pariatur quos veritatis dicta et itaque dignissimos amet molestiae?",
 }
 
+var colorWall = {
+    "What is Dissiax?":"rgb(48, 141, 255)",
+    "Why Dissiax?":"rgb(255, 101, 20)",
+    "Services":"rgb(255, 141, 255)",
+    "Contact Us":"rgb(48, 221, 48)",
+}
+
 function other(original) {
     if (original === "left") return "right"
     if (original === "right") return "left"
@@ -53,6 +60,16 @@ function changeText(header, categoryName) {
     }, 1027)
 }
 
+function changeNavbar(categoryName) {
+    var navbar = document.getElementById("navbar")
+    navbar.style.transition = "0.5s"
+    navbar.style.backgroundColor = colorWall[categoryName] || "white"
+
+    setTimeout(function(){
+        navbar.style.transition = "0s"
+    }, 1027)
+}
+
 window.onload = function() {
     listElements = Array.prototype.slice.call(document.getElementsByClassName("child"))
     headers = Array.prototype.slice.call(document.getElementsByClassName("alpha"))
@@ -78,6 +95,9 @@ window.onload = function() {
             // changes the text
             changeText(h1, child.id)
             changeText(h2, child.id)
+
+            // changes navbar color
+            changeNavbar(child.id)
         }
     })
 }
