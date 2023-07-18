@@ -7,7 +7,7 @@ var textWall = {
     "What is Dissiax?":"Lorem1",
     "Why Dissiax?":"Lorem2",
     "Services":"Lorem3",
-    "Contact Us":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, quidem vel. Exercitationem ipsa eligendi, aspernatur aut nemo debitis? Nobis illo voluptatibus pariatur quos veritatis dicta et itaque dignissimos amet molestiae?",
+    "Contact Us":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem distinctio, cumque vel molestiae ipsum earum ullam alias dolorem deleniti omnis tempore porro corrupti placeat provident nisi quibusdam pariatur! Iste, minus!",
 }
 
 var colorWall = {
