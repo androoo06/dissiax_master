@@ -13,15 +13,15 @@ var textWall = {
 var colorWall = {
     "What is Dissiax?":"rgb(48, 141, 255)",
     "Why Dissiax?":"rgb(224, 81, 70)",
-    "Services":"rgb(222, 209, 33)",
-    "Contact Us":"rgb(34, 166, 19)",
+    "Services":"rgb(255, 202, 97)",
+    "Contact Us":"rgb(98, 195, 0)",
 }
 
 var pgColorWall = {
     "What is Dissiax?":"rgb(211, 224, 255)",
     "Why Dissiax?":"rgb(224, 181, 170)",
-    "Services":"rgb(222, 209, 133)",
-    "Contact Us":"rgb(134, 255, 119)",
+    "Services":"rgb(255, 241, 170)",
+    "Contact Us":"rgb(202, 255, 191)",
 }
 
 function other(original) {
