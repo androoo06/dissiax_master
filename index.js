@@ -17,6 +17,13 @@ var colorWall = {
     "Contact Us":"rgb(34, 166, 19)",
 }
 
+var pgColorWall = {
+    "What is Dissiax?":"rgb(211, 224, 255)",
+    "Why Dissiax?":"rgb(224, 181, 170)",
+    "Services":"rgb(222, 209, 133)",
+    "Contact Us":"rgb(134, 255, 119)",
+}
+
 function other(original) {
     if (original === "left") return "right"
     if (original === "right") return "left"
@@ -70,6 +77,26 @@ function changeNavbar(categoryName) {
     }, 1027)
 }
 
+function changePgs(categoryName) {
+    var h1 = document.getElementById("header1")
+    var h2 = document.getElementById("header2")
+    var hs = [h1, h2]
+
+    hs.forEach(h => {
+       // h.style.transition = "0.5s"
+        h.style.backgroundColor = pgColorWall[categoryName] || "white"
+
+        var pg = h.children[0]
+        //pg.style.transition = 
+        pg.style.color = colorWall[categoryName] || "white"
+        console.log("a")
+
+        // setTimeout(function(){
+        //     h.style.transition = "0s"
+        // }, 550)
+    });
+}
+
 window.onload = function() {
     listElements = Array.prototype.slice.call(document.getElementsByClassName("child"))
     headers = Array.prototype.slice.call(document.getElementsByClassName("alpha"))
@@ -98,6 +125,9 @@ window.onload = function() {
 
             // changes navbar color
             changeNavbar(child.id)
+
+            // changes headers
+            changePgs(child.id)
         }
     })
 }
