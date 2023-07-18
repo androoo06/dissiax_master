@@ -3,36 +3,24 @@ var headers
 var statuses = {}
 var currentScrn = "What is Dissiax?"
 
-var textWall = {
-    "What is Dissiax?":"Lorem1",
-    "Why Dissiax?":"Lorem2",
-    "Services":"Lorem3",
-    "Contact Us":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem distinctio, cumque vel molestiae ipsum earum ullam alias dolorem deleniti omnis tempore porro corrupti placeat provident nisi quibusdam pariatur! Iste, minus!",
-}
+var observer = new IntersectionObserver((entries) => {
+    entries.forEach((object) => {
+        if (object.isIntersecting) {
+            // show
+            showParagraph_TEST(object.target, true)
+        } else {
+            // hide
+            showParagraph_TEST(object.target, false)
+        }
+    })
+})
 
-var colorWall = {
-    "What is Dissiax?":"rgb(48, 141, 255)",
-    "Why Dissiax?":"rgb(224, 81, 70)",
-    "Services":"rgb(255, 202, 97)",
-    "Contact Us":"rgb(98, 195, 0)",
-}
-
-var pgColorWall = {
-    "What is Dissiax?":"rgb(211, 224, 255)",
-    "Why Dissiax?":"rgb(224, 181, 170)",
-    "Services":"rgb(255, 241, 170)",
-    "Contact Us":"rgb(202, 255, 191)",
-}
-
-function other(original) {
-    if (original === "left") return "right"
-    if (original === "right") return "left"
-    
-    return "right"
+function getOtherDirection(original) {
+    return (original === "right") ? "left" : "right"
 }
 
 function slide(element, original) {
-    var newOther  = other(original)
+    var newOther  = getOtherDirection(original)
 
     var width = element.clientWidth
     var parentWidth = element.parentElement.clientWidth
@@ -77,23 +65,20 @@ function changeNavbar(categoryName) {
     }, 1027)
 }
 
+function showParagraph_TEST(obj, bool) {
+   obj.style.opacity = bool ? 1 : 0
+}
+
 function changePgs(categoryName) {
     var h1 = document.getElementById("header1")
     var h2 = document.getElementById("header2")
     var hs = [h1, h2]
 
     hs.forEach(h => {
-       // h.style.transition = "0.5s"
         h.style.backgroundColor = pgColorWall[categoryName] || "white"
 
         var pg = h.children[0]
-        //pg.style.transition = 
         pg.style.color = colorWall[categoryName] || "white"
-        console.log("a")
-
-        // setTimeout(function(){
-        //     h.style.transition = "0s"
-        // }, 550)
     });
 }
 
@@ -130,4 +115,7 @@ window.onload = function() {
             changePgs(child.id)
         }
     })
+
+    var scrollers = document.querySelectorAll(".scroller")
+    scrollers.forEach((element) => observer.observe(element))
 }
