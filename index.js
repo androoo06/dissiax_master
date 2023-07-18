@@ -12,9 +12,9 @@ var textWall = {
 
 var colorWall = {
     "What is Dissiax?":"rgb(48, 141, 255)",
-    "Why Dissiax?":"rgb(255, 101, 20)",
-    "Services":"rgb(255, 141, 255)",
-    "Contact Us":"rgb(48, 221, 48)",
+    "Why Dissiax?":"rgb(224, 81, 70)",
+    "Services":"rgb(222, 209, 33)",
+    "Contact Us":"rgb(34, 166, 19)",
 }
 
 function other(original) {
