@@ -109,17 +109,15 @@ a:hover::before {
     left: 37.5%;
 }
 
-#header3 {
+#header3 { /* for positioning purposes only */
     opacity: 0;
-    transition: 0.75s;
     position: relative;
     top: 30%;
     left: 37.5%;
 }
 
-#header4 {
+#header4 { /* for positioning purposes only */
     opacity: 0;
-    transition: 0.75s;
     position: relative;
     top: 40%;
     left: 37.5%;

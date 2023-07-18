@@ -1,3 +1,5 @@
+// TABULAR DATA
+
 var textWall = {
     "What is Dissiax?":"Lorem1",
     "Why Dissiax?":"Lorem2",
@@ -12,9 +14,47 @@ var colorWall = {
     "Contact Us":"rgb(98, 195, 0)",
 }
 
-var pgColorWall = {
+var alphaColorWall = {
     "What is Dissiax?":"rgb(211, 224, 255)",
     "Why Dissiax?":"rgb(224, 181, 170)",
     "Services":"rgb(255, 241, 170)",
     "Contact Us":"rgb(202, 255, 191)",
+}
+
+var transitionTimes = {
+    "alpha":1,
+    "navbar":0.5,
+    "scroller":1.25,
+    "pg1":0.5,
+}
+
+// UTIL FUNCTIONS
+
+function getDirection(object) {
+    var percent = object.offsetLeft / window.innerWidth
+    return (percent === 0.125) ? "left" : "right"
+}
+
+function getOtherDirection(original) {
+    return (original === "right") ? "left" : "right"
+}
+
+async function changeTransition(object, custom) {
+    var revertDelay = custom.revertDelay || custom.transTime
+
+    object.style.transition = String(custom.transTime) + "s"
+
+    if ("f" in custom) {
+        setTimeout(() => {
+            custom.f[1]()
+        }, (custom.f[0] * 1000))
+    }
+
+    setTimeout(() => {
+        object.style.transition = "0s"
+    }, (revertDelay * 1000) + 27);
+
+    if ("yield" in custom) {
+        await sleep((revertDelay * 1000) + 27)
+    }
 }

@@ -1,118 +1,106 @@
-var listElements
-var headers
-var statuses = {}
 var currentScrn = "What is Dissiax?"
+var statuses = {}
+var inProgress = {} // For paragraphs
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
 var observer = new IntersectionObserver((entries) => {
     entries.forEach((object) => {
         if (object.isIntersecting) {
             // show
-            showParagraph_TEST(object.target, true)
+            scrollerEffects(object.target, true)
         } else {
             // hide
-            showParagraph_TEST(object.target, false)
+            scrollerEffects(object.target, false)
         }
     })
 })
 
-function getOtherDirection(original) {
-    return (original === "right") ? "left" : "right"
-}
+// EFFECTS
 
-function slide(element, original) {
-    var newOther  = getOtherDirection(original)
-
-    var width = element.clientWidth
-    var parentWidth = element.parentElement.clientWidth
-    var percent = Math.round(100 * width / parentWidth)
-
-    element.style.transition = "1s"
-
-    if (newOther === "left") {
-        element.style.left = "12.5%"
-    } else {
-        element.style.left = String(100 - percent - 12.5)+"%"
-    }
-
-    setTimeout(() => {
-        element.style.transition = "0s"
-    }, 1100);
-
-    statuses[element.id] = newOther
-}
-
-function changeText(header, categoryName) {
-    var pgs = header.children
-
-    pgs[0].style.opacity = 0;
-    pgs[0].style.transition = "0.5s"
-    setTimeout(function(){
-        pgs[0].innerHTML = (header.id == "header1") ? categoryName : textWall[categoryName];
-        pgs[0].style.opacity = 1;
-    }, 525)
-    setTimeout(function(){
-        pgs[0].style.transition = "0s"
-    }, 1027)
-}
-
-function changeNavbar(categoryName) {
+function navbarEffects(newCategory) {
     var navbar = document.getElementById("navbar")
-    navbar.style.transition = "0.5s"
-    navbar.style.backgroundColor = colorWall[categoryName] || "white"
+    changeTransition(navbar, {"transTime":transitionTimes.navbar})
 
-    setTimeout(function(){
-        navbar.style.transition = "0s"
-    }, 1027)
+    navbar.style.backgroundColor = colorWall[newCategory] || "white"
 }
 
-function showParagraph_TEST(obj, bool) {
-   obj.style.opacity = bool ? 1 : 0
+function alphaEffects(newCategory) {
+    var alphas = Array.from(document.querySelectorAll(".alpha"))
+
+    alphas.forEach((alpha) => {
+        var direction = statuses[alpha.id] || "right"
+        var newDir = getOtherDirection(direction)
+
+        var width = alpha.clientWidth
+        var parentWidth = alpha.parentElement.clientWidth
+        var percent = Math.round(100 * width / parentWidth)
+
+        changeTransition(alpha, {"transTime":transitionTimes.alpha})
+
+        if (newDir === "left") {
+            alpha.style.left = "12.5%"
+        } else {
+            alpha.style.left = String(100 - percent - 12.5)+"%"
+        }
+
+        alpha.style.backgroundColor = alphaColorWall[newCategory] || "white"
+        statuses[alpha.id] = newDir
+    })
 }
 
-function changePgs(categoryName) {
-    var h1 = document.getElementById("header1")
-    var h2 = document.getElementById("header2")
-    var hs = [h1, h2]
+function pgEffects(newCategory) {
+    var pgs = Array.from(document.querySelectorAll(".paragraph1"))
+    pgs.forEach((pg) => {
+        var id = pg.parentElement.id
+        pg.style.opacity = 0
 
-    hs.forEach(h => {
-        h.style.backgroundColor = pgColorWall[categoryName] || "white"
+        // add to in-progress list to avoid overlap bug later
+        inProgress[id] = (inProgress[id] && inProgress[id] + 1) || 1
 
-        var pg = h.children[0]
-        pg.style.color = colorWall[categoryName] || "white"
-    });
+        changeTransition(pg, {
+            "transTime":transitionTimes.pg1,
+            "f": [transitionTimes.pg1, function(){
+                pg.innerHTML = (id == "header1") ? newCategory : textWall[newCategory];
+                pg.style.color = colorWall[newCategory] || "white"
+                
+                setTimeout(()=>{
+                    // only display if this is the last one in progress (to avoid overlap bug)
+                    if (inProgress[id] == 1) {
+                        changeTransition(pg, {"transTime":transitionTimes.pg1})
+                        pg.style.opacity = 1
+                    }
+
+                    inProgress[id] -= 1
+                }, 100)
+            }]
+        })
+    })
 }
+
+function scrollerEffects(scroller, bool) {
+    changeTransition(scroller, {"transTime":transitionTimes.scroller})
+    scroller.style.opacity = bool ? 1 : 0
+}
+
+// RENDER
 
 window.onload = function() {
-    listElements = Array.prototype.slice.call(document.getElementsByClassName("child"))
-    headers = Array.prototype.slice.call(document.getElementsByClassName("alpha"))
+    var listElements = Array.from(document.querySelectorAll(".child"))
+    var alphas = Array.from(document.querySelectorAll(".alpha"))
 
-    var h1 = document.getElementById("header1")
-    var h2 = document.getElementById("header2")
-
-    statuses[h1.id] = "right"
-    statuses[h2.id] = "left"
-
-    slide(h1, "right")
-    slide(h2, "left")
+    alphas.forEach(alpha => {
+        statuses[alpha.id] = getDirection(alpha)
+    })
 
     listElements.forEach(child => {
         child.onclick = function() {
             if (currentScrn === child.id) return;
             currentScrn = child.id
 
-            // alternates positions of UI elements
-            slide(h1, statuses["header1"])
-            slide(h2, statuses["header2"])
-
-            // changes the text
-            changeText(h1, child.id)
-            changeText(h2, child.id)
-
-            // changes navbar color
-            changeNavbar(child.id)
-
-            // changes headers
-            changePgs(child.id)
+            // effects
+            navbarEffects(child.id)
+            alphaEffects(child.id)
+            pgEffects(child.id)
         }
     })
 
