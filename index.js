@@ -60,8 +60,13 @@ function pgEffects(newCategory) {
         changeTransition(pg, {
             "transTime":transitionTimes.pg1,
             "f": [transitionTimes.pg1, function(){
-                pg.innerHTML = (id == "header1") ? newCategory : textWall[newCategory];
-                pg.style.color = colorWall[newCategory] || "white"
+                pg.innerHTML = (id == "header1") ? newCategory : textWall[newCategory]
+
+                if (id == "header1") {
+                    pg.style.color = colorWall[newCategory] || "white"
+                } else {
+                    pg.style.color = alphaTextColorWall[newCategory] || alphaTextColorWall.__Default
+                }
                 
                 setTimeout(()=>{
                     // only display if this is the last one in progress (to avoid overlap bug)
