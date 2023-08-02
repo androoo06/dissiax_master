@@ -31,7 +31,7 @@ var alphaTextColorWall = {
     //"Services":"rgb(255, 202, 97)",
     //"Contact Us":"rgb(98, 195, 0)",
 
-    "__Default":"rgb(0, 0, 0)", // used if entry for any of the above isn't found
+    "__Default": "rgb(0, 0, 0)", // used if entry for any of the above isn't found
 }
 
 var transitionTimes = {
@@ -45,7 +45,7 @@ var transitionTimes = {
 
 function getDirection(object) {
     var percent = object.offsetLeft / window.innerWidth
-    return (percent === 0.125) ? "left" : "right"
+    return (percent <= 0.125) ? "left" : "right"
 }
 
 function getOtherDirection(original) {

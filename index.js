@@ -5,13 +5,8 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
 var observer = new IntersectionObserver((entries) => {
     entries.forEach((object) => {
-        if (object.isIntersecting) {
-            // show
-            scrollerEffects(object.target, true)
-        } else {
-            // hide
-            scrollerEffects(object.target, false)
-        }
+        // show / hide element on scroll
+        scrollerEffects(object.target, object.isIntersecting)
     })
 })
 
@@ -60,6 +55,10 @@ function pgEffects(newCategory) {
         changeTransition(pg, {
             "transTime":transitionTimes.pg1,
             "f": [transitionTimes.pg1, function(){
+
+                // For Later: replace the below line with implementation of multiple pgs of diff txt
+                // (requires converting the textwall table values into arrays to store vals)
+                // ^^^ hide the pg boxes unused / make more if necessary
                 pg.innerHTML = (id == "header1") ? newCategory : textWall[newCategory]
 
                 if (id == "header1") {
