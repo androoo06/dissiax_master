@@ -1,113 +1,113 @@
-var currentScrn = "What is Dissiax?"
-var statuses = {}
-var inProgress = {} // For paragraphs
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+let currentTab = 0
+let animating = false
 
-var observer = new IntersectionObserver((entries) => {
+let observer = new IntersectionObserver((entries) => {
     entries.forEach((object) => {
         // show / hide element on scroll
         scrollerEffects(object.target, object.isIntersecting)
     })
 })
 
-// EFFECTS
-
-function navbarEffects(newCategory) {
-    var navbar = document.getElementById("navbar")
-    changeTransition(navbar, {"transTime":transitionTimes.navbar})
-
-    navbar.style.backgroundColor = colorWall[newCategory] || "white"
-}
-
-function alphaEffects(newCategory) {
-    var alphas = Array.from(document.querySelectorAll(".alpha"))
-
-    alphas.forEach((alpha) => {
-        var direction = statuses[alpha.id] || "right"
-        var newDir = getOtherDirection(direction)
-
-        var width = alpha.clientWidth
-        var parentWidth = alpha.parentElement.clientWidth
-        var percent = Math.round(100 * width / parentWidth)
-
-        changeTransition(alpha, {"transTime":transitionTimes.alpha})
-
-        if (newDir === "left") {
-            alpha.style.left = "12.5%"
-        } else {
-            alpha.style.left = String(100 - percent - 12.5)+"%"
-        }
-
-        alpha.style.backgroundColor = alphaColorWall[newCategory] || "white"
-        statuses[alpha.id] = newDir
-    })
-}
-
-function pgEffects(newCategory) {
-    var pgs = Array.from(document.querySelectorAll(".paragraph1"))
-    pgs.forEach((pg) => {
-        var id = pg.parentElement.id
-        pg.style.opacity = 0
-
-        // add to in-progress list to avoid overlap bug later
-        inProgress[id] = (inProgress[id] && inProgress[id] + 1) || 1
-
-        changeTransition(pg, {
-            "transTime":transitionTimes.pg1,
-            "f": [transitionTimes.pg1, function(){
-
-                // For Later: replace the below line with implementation of multiple pgs of diff txt
-                // (requires converting the textwall table values into arrays to store vals)
-                // ^^^ hide the pg boxes unused / make more if necessary
-                pg.innerHTML = (id == "header1") ? newCategory : textWall[newCategory]
-
-                if (id == "header1") {
-                    pg.style.color = colorWall[newCategory] || "white"
-                } else {
-                    pg.style.color = alphaTextColorWall[newCategory] || alphaTextColorWall.__Default
-                }
-                
-                setTimeout(()=>{
-                    // only display if this is the last one in progress (to avoid overlap bug)
-                    if (inProgress[id] == 1) {
-                        changeTransition(pg, {"transTime":transitionTimes.pg1})
-                        pg.style.opacity = 1
-                    }
-
-                    inProgress[id] -= 1
-                }, 100)
-            }]
-        })
-    })
-}
-
 function scrollerEffects(scroller, bool) {
-    changeTransition(scroller, {"transTime":transitionTimes.scroller})
     scroller.style.opacity = bool ? 1 : 0
 }
 
-// RENDER
+function getTab(id) {
+    return parseInt(id.split("#")[1])
+}
 
-window.onload = function() {
-    var listElements = Array.from(document.querySelectorAll(".child"))
-    var alphas = Array.from(document.querySelectorAll(".alpha"))
+function swipe(newTab, oldTab) {
+    // slide all the tabs over left/right
+    let steps = Math.abs(newTab - oldTab)
+    let dir = Math.sign(newTab - oldTab)
+    let len = tabs.length
 
-    alphas.forEach(alpha => {
-        statuses[alpha.id] = getDirection(alpha)
-    })
+    // debounce to stop from possible jitterclicking
+    animating = true
+    setTimeout(() => {
+        animating = false
+    }, 502 * steps)
 
-    listElements.forEach(child => {
+    // shift all elements over left/right 100% to align with what the user clicked
+    for (let i=0; i<steps; i++) { // steps to get to desired
+        for (let j=0; j<len; j++) { // applying the step to each element(category)
+            
+            tabLefts[j] += (dir * 100)
+            
+            let percent = `${tabLefts[j]}%`
+            let element = document.getElementById(tabs[j])
+
+            element.style.left = percent
+        }
+    }
+
+    currentTab = newTab
+}
+
+function preload() {
+    // create all HTML Elements based on the data in data.js
+    // create child elements then add them to a category div
+
+    for (i=0; i<tabs.length; i++) {
+        let left = -i * 100
+        let y = 10
+
+        let children = ""
+        let sections = paragraphText[tabs[i]]
+
+        for (const [headerTitle, paragraphs] of Object.entries(sections)) {
+            let title = headerTitle.split(" -- ")
+            // header
+            let header = 
+                `<div class="header scroller element" style="top: ${y}%">
+                    <h3 class="paragraphTxt">${title[0]}</h3>
+                </div>`
+
+            children += header
+            y += 5
+
+            // sub-paragraphs for headers
+            for (j=0; j<paragraphs.length; j++) {
+                let text = paragraphs[j]
+                let pg = 
+                    `<div class="paragraph scroller element" style="top: ${y}%">
+                        <p class="paragraphTxt">
+                            ${text}
+                        </p>
+                    </div>`
+                
+                children += pg
+                y += 5
+            }
+        }
+
+        tabLefts[i] = left
+
+        // category
+        let html = 
+            `<div class="category" id="${tabs[i]}" style="left: ${left}%; position: absolute;">
+                ${children}
+            </div>
+            `
+        document.body.innerHTML += html
+    }
+}
+
+window.onload = function () {
+    preload()
+
+    for (let id=0; id<tabs.length; id++) {
+        let child = document.getElementById(`tab#${id}`)
         child.onclick = function() {
-            if (currentScrn === child.id) return;
-            currentScrn = child.id
+            let tab = getTab(child.id)
+            if (currentTab == tab) return;
+            if (animating) return;
 
             // effects
-            navbarEffects(child.id)
-            alphaEffects(child.id)
-            pgEffects(child.id)
+            swipe(tab, currentTab)
         }
-    })
+    }
 
-    var scrollers = document.querySelectorAll(".scroller")
+    let scrollers = document.querySelectorAll(".scroller")
     scrollers.forEach((element) => observer.observe(element))
 }

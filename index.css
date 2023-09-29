@@ -3,11 +3,15 @@
     --light: rgb(211, 224, 255);
 }
 
-html, body{
+html, body, .category{
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
+}
+
+.category {
+    transition: left 0.5s ease, right 0.5s ease;
 }
 
 .parent {
@@ -65,18 +69,18 @@ a:hover::before {
 
 /* main page */
 
-.alpha {
+.element {
     display: flex;
     position: relative;
 
-    font-size: 3.5vw;
+    font-size: 3vw;
     font-family: 'Dosis';
 
     background-color: var(--light);
     color: var(--blue);
 }
 
-.alphaHeader1 {
+.header {
     display: flex;
 
     align-items: center;
@@ -85,52 +89,36 @@ a:hover::before {
     width: 35%;
     height: 20%;
 
-    transition: 0s; /* to be changed in script */
     border-radius: 3px;
     
     position: relative;
     top: 10%;
     left: 12.5%;
+
+    transition: opacity 0.75s ease;
 }
 
-.alphaHeader2 {
+.paragraph {
     display: flex;
 
-    text-align: justify;
+    text-align: left;
     overflow: hidden;
 
     width: 50%;
 
-    transition: 0s; /* to be changed in script */
+    transition: opacity 0.75s ease;
     border-radius: 3px;
     
     position: relative;
     top: 20%;
     left: 37.5%;
+
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
-#header3 { /* for positioning purposes only */
-    opacity: 0;
-    position: relative;
+#pg2 {
     top: 30%;
-    left: 37.5%;
-}
-
-#header4 { /* for positioning purposes only */
-    opacity: 0;
-    position: relative;
-    top: 40%;
-    left: 37.5%;
-}
-
-.paragraph1 {
-    transition: 0s; /* to be changed in script */
-    opacity: 1;
-}
-
-.paragraph2 {
-    transition: 0s; /* to be changed in script */
-    opacity: 0;
 }
 
 p {
