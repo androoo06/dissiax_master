@@ -21,7 +21,8 @@ html, body, .category{
     flex-direction: row;
     align-items: center;
 
-    background-color: var(--blue)
+    background-color: var(--blue);
+    transition: background-color 0.5s ease;
 }
 
 .logo {

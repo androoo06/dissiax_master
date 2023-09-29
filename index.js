@@ -28,6 +28,10 @@ function swipe(newTab, oldTab) {
         animating = false
     }, 502 * steps)
 
+    // navbar color
+    let navbar = document.getElementById("navbar")
+    navbar.style.backgroundColor = headerColors[tabs[newTab]] || "var(--light)"
+
     // shift all elements over left/right 100% to align with what the user clicked
     for (let i=0; i<steps; i++) { // steps to get to desired
         for (let j=0; j<len; j++) { // applying the step to each element(category)
@@ -53,14 +57,19 @@ function preload() {
         let y = 10
 
         let children = ""
-        let sections = paragraphText[tabs[i]]
+        let section = tabs[i]
+        let sections = paragraphText[section]
+
+        let txtColor = headerColors[section]
+        let bgColor = paragraphColors[section] 
 
         for (const [headerTitle, paragraphs] of Object.entries(sections)) {
             let title = headerTitle.split(" -- ")
+            
             // header
             let header = 
-                `<div class="header scroller element" style="top: ${y}%">
-                    <h3 class="paragraphTxt">${title[0]}</h3>
+                `<div class="header scroller element" style="top: ${y}%; background-color: ${bgColor};">
+                    <h3 class="paragraphTxt" style="color: ${txtColor};">${title[0]}</h3>
                 </div>`
 
             children += header
@@ -70,7 +79,7 @@ function preload() {
             for (j=0; j<paragraphs.length; j++) {
                 let text = paragraphs[j]
                 let pg = 
-                    `<div class="paragraph scroller element" style="top: ${y}%">
+                    `<div class="paragraph scroller element" style="top: ${y}%; background-color: ${bgColor};">
                         <p class="paragraphTxt">
                             ${text}
                         </p>
@@ -85,7 +94,7 @@ function preload() {
 
         // category
         let html = 
-            `<div class="category" id="${tabs[i]}" style="left: ${left}%; position: absolute;">
+            `<div class="category" id="${section}" style="left: ${left}%; position: absolute;">
                 ${children}
             </div>
             `
@@ -103,7 +112,7 @@ window.onload = function () {
             if (currentTab == tab) return;
             if (animating) return;
 
-            // effects
+            // change tabs
             swipe(tab, currentTab)
         }
     }
