@@ -125,3 +125,68 @@ a:hover::before {
 p {
     color: black; /* also see "__Default" property of "alphaTextColorWall" in data.js */
 }
+
+.carousel {
+    display: flex;
+
+    width: 35%;
+    height: 30%;
+
+    border-radius: 3px;
+    
+    position: absolute;
+    top: 25%;
+    left: 32.5%;
+
+    overflow: visible;
+    transition: opacity 0.75s ease;
+
+    /* justify-content: space-evenly; */
+}
+
+.carousel button {
+    position: absolute;
+    height: 100%;
+    width: 7.5%;
+
+    background-color: transparent;
+    border: 0;
+    font-size: large;
+    /* font-weight: bold; */
+}
+
+.carousel div {
+    position: absolute;
+
+    width: 85%;
+    height: 100%;
+    left: 7.5%;
+
+    text-align: center;
+    /* background-color: red; */
+    margin: 0;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.carousel div h3 {
+    position: absolute;
+    /* background-color: yellow; */
+
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+
+    overflow: hidden;
+    display: block;
+    
+    width: 100%;
+    height: 100%;
+
+    /* transition: all 0.5s ease; */
+}
+
+/* 
+::-webkit-scrollbar {
+    visibility: hidden;
+} */

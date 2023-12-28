@@ -25,10 +25,6 @@ let paragraphText = {
             "He originally found his love with minecraft, and would spend hours developing mods and uploading it to his youtube channel. When he got older, he wanted to know how computers actually functioned, which led him down a rabbit hole to developing his own operating system which is still being worked on to this day.",
             "Dissiax has grown into a server hosting service, while the operating system has been put on the back burner as a research project.",
         ],
-
-        "Who is Dissiax -- playercard": [
-            "Ya Motha"
-        ],
     },
 
     /// WHY DISSIAX?
@@ -56,6 +52,12 @@ let paragraphText = {
         ],
         "Contact! -- default" : [
             "rahrah rahrah yayayaya blahblah blahblah"
+        ],
+        "carousel-1 -- carousel": [
+            "Slide numero 1", 
+            "Slide numero 2", 
+            "Slide numero 3",
+            "Slide numero 4",
         ],
     },
 }
