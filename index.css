@@ -8,6 +8,18 @@ html, body, .category{
     height: 100%;
     padding: 0;
     margin: 0;
+
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .category {
