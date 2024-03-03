@@ -41,6 +41,10 @@ function swipe(newTab, oldTab) {
     let navbar = document.getElementById("navbar")
     navbar.style.backgroundColor = headerColors[tabs[newTab]] || "var(--light)"
 
+    for (let i=0; i<tabs.length; i++) {
+        document.getElementById(tabs[i]).classList.add("invisibleScroll")
+    }
+
     // shift all elements over left/right 100% to align with what the user clicked
     for (let i=0; i<steps; i++) { // steps to get to desired
         for (let j=0; j<len; j++) { // applying the step to each element(category)
@@ -53,6 +57,12 @@ function swipe(newTab, oldTab) {
             element.style.left = percent
         }
     }
+
+    setTimeout(() => {
+        for (let i=0; i<tabs.length; i++) {
+            document.getElementById(tabs[i]).classList.remove("invisibleScroll")
+        }
+    }, 495)
 
     currentTab = newTab
 
