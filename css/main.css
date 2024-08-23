@@ -1,0 +1,156 @@
+@import url(navbar.css);
+@import url(content.css);
+@import url(carousel.css);
+@import url(images.css);
+
+:root {
+    /* Header Colors */
+    --header-about: rgb(48, 141, 255);
+    --header-why: rgb(224, 81, 70);
+    --header-serv: rgb(255, 202, 97);
+    --header-cont: rgb(98, 195, 0);
+
+    /* Paragraph Colors */
+    --pg-about: rgb(211, 224, 255);
+    --pg-why: rgb(224, 181, 170);
+    --pg-serv: rgb(255, 241, 170);
+    --pg-cont: rgb(202, 255, 191);
+
+    /* Paragraph Text Colors */
+    --pgt-default: rgb(0, 0, 0);
+    /* --pgt-about: rgb(48, 141, 255); */
+    /* --pgt-why: rgb(224, 81, 70); */
+    /* --pgt-serv: rgb(255, 202, 97); */
+    /* --pgt-cont: rgb(98, 195, 0); */
+
+    /* Mobile text titles */
+    --mobheader-about: "About";
+    --mobheader-why: "Why us?";
+    --mobheader-serv: "Services";
+    --mobheader-cont: "Contact";
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    /* max-width: 100%; */
+    overflow-x: hidden;
+
+    font-family: 'Dosis';
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;   
+    scrollbar-width: none;
+}
+
+body {
+    display: flex;  
+    justify-content: center;
+}
+
+/* when screen width is less than max-width px (mobile view) */
+@media screen and (max-width: 600px) {
+
+    .mobilePad {
+        padding: 3%;
+    }
+
+    .pad1 {
+        padding: 1.75%;
+    }
+
+
+    /* Make boxes full-width of screen & change header color via JS */
+    /* .header {
+        width: 100%;
+        left: 0%;
+        height: 1%;
+        color: white;
+        font-size: 5vw;
+    } */
+
+    /* .paragraph {
+        width: 100%;
+        left: 0;
+        font-size: 4vw;
+    } */
+
+    /* NavBar at the bottom */
+    #navbar {
+        top: unset; bottom: 0; height: 5%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #navbar div img {
+        height: 75%;
+        margin: 0; padding: 0;
+    }
+
+    #content {
+        top: 0; left: 0; width: 100%; height: 95%;
+    }
+
+    /* Changing NavBar Texts (CSS Hacky Way) */
+    #navbar-tabs div a {
+        visibility: hidden;
+        position: relative;
+    }
+
+    #navbar-tabs div a:after {
+        visibility: visible;
+        
+        position: absolute;
+        width: 100%; height: 100%; top: 0;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        font-size: 1.75vw;
+    }
+
+    #tab-about a:after {
+        content: var(--mobheader-about);
+    }
+
+    #tab-why a:after {
+        content: var(--mobheader-why);
+    }
+
+    #tab-serv a:after {
+        content: var(--mobheader-serv);
+    }
+
+    #tab-cont a:after {
+        content: var(--mobheader-cont);
+    }
+}
+
+#particles-js {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    z-index: -10000;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+@media screen and (max-width: 275px) {
+    #navbar div img {
+        content: url("../assets/Dissiax_Logo.png");
+        aspect-ratio: 1;
+    }
+}
