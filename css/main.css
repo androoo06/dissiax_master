@@ -150,7 +150,7 @@ body {
 
 @media screen and (max-width: 275px) {
     #navbar div img {
-        content: url("./assets/Dissiax_Logo.png");
+        content: url("../assets/Dissiax_Logo.png");
         aspect-ratio: 1;
     }
 }
