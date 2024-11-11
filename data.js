@@ -87,9 +87,9 @@ let paragraphText = {
         "$CAROUSEL$carousel-1": [
             // [title, innerHTML]
             ['Brenden', ''], 
-            ['Brenden', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae cumque quia dolor, voluptatibus, veritatis illo expedita sequi, sit numquam reprehenderit dolores! Quos eveniet quia, voluptatum quae sapiente sequi quo aliquam!'],
+            ['Brenden', 'Brenden Adolfson is the founder and Chief Executive Officer of Dissiax Inc. Brenden is dedicated to perfecting the security, efficiency, and speed of computing through inspiring others and developing innovative software.'],
             ['Andrew', '<img id=andrew alt="Andrew Miller">'],
-            ['Andrew', ''], 
+            ['Andrew', "Andrew Miller is a Software Engineer at Dissiax Inc. Andrew is passionate about and devoted to helping our clients' needs be met, and helping Dissiax improve as a business."], 
             ['Jacob', ''],
         ],
     },
